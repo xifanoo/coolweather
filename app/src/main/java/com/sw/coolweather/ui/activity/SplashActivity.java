@@ -1,7 +1,9 @@
-package com.sw.coolweather;
+package com.sw.coolweather.ui.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.sw.coolweather.R;
 
 public class SplashActivity extends AppCompatActivity {
 
