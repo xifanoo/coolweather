@@ -20,6 +20,7 @@ import com.sw.coolweather.R;
 import com.sw.coolweather.db.City;
 import com.sw.coolweather.db.County;
 import com.sw.coolweather.db.Province;
+import com.sw.coolweather.ui.activity.MainActivity;
 import com.sw.coolweather.ui.activity.WeatherActivity;
 import com.sw.coolweather.util.HttpUtil;
 import com.sw.coolweather.util.Utility;
@@ -102,10 +103,18 @@ public class ChooseAreaFragment extends Fragment {
                     queryCounties();
                 }else if (currentLevel == LEVEL_COUNTY){
                     String weatherId = countyList.get(position).getWeatherId();
-                    Intent intent = new Intent(getActivity(), WeatherActivity.class);
-                    intent.putExtra("weather_id",weatherId);
-                    startActivity(intent);
-                    getActivity().finish();
+                    if (getActivity() instanceof MainActivity){
+                        Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                        intent.putExtra("weather_id",weatherId);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }else if (getActivity() instanceof WeatherActivity){
+                        WeatherActivity activity = (WeatherActivity) getActivity();
+                        activity.getDrawerLayout().closeDrawers();
+                        activity.getSwipeRefresh().setRefreshing(true);
+                        activity.requestWeather(weatherId);
+                    }
+
                 }
             }
         });
